@@ -22,7 +22,6 @@ use replace to replace all the character occurences with empty spaces
 
 
 """
-#IMP: Have to consider case where first letter is less than the rest of occurences
 #check if a string has the same number of occurrences throughout with a leniency of 1 character
 def isValid(hello):
 
@@ -52,35 +51,74 @@ def isValid(hello):
     
     currentChar = hello[0] #set value of second unique character
     
-    #if(count == hello.count(currentChar)):
+
     if(not checkCount(count,hello)): #if counts of first and secound don't match, check if difference is valid
         
 
          #if difference is allowed, check the third character
-        if(checkCountDifference(count,hello) or (count == hello.count(currentChar)+1)):
+        if(checkCountDifference(count,hello) or (count == hello.count(currentChar)+1)): #one could be bigger/smaller and still work
             
             count2 = hello.count(currentChar)
             hello = hello.replace(currentChar, '') #reset string for next checkCount
 
 
-            if(not checkCount(count,hello.replace(currentChar,''))):#check first count against third character
+            if(checkCount(count,hello)):#check first count against third character
+                
 
-                #1st one failed, test if second has correct count
 
-                if(len(hello) == 0): #check for empty string
-                    return "YES"
+                #first one failed, test if second has correct count
+                
+                #count one is accurate, check if two can be 'fixed' by removing a character
+                if(count2 == count + 1):
+
+                    #second can be removed, change leniency and continue
+                    oneRemoved = True #used leniency (oneRemoved), set to True
+
+                    hello = hello.replace(currentChar,'')
+                
+                
+                else: #second is smaller, can't fix by removal, return "NO"
+                    return "NO"
+                
+            elif(checkCount(count2,hello)):#check second count against third character
             
+                #count two is accurate, check if one can be 'fixed' by removing a character
+                if(count == count2 + 1):
 
-                if(not checkCount(count2,hello)): #check if both failed, if true then return False
+                    #first can be removed, change leniency and continue
+                    oneRemoved = True #used leniency (oneRemoved), set to True
+
+                    hello = hello.replace(currentChar,'')
+
+                    count = count2 #set count for future use
+                
+                else: #first is smaller, can't fix by removal, return "NO"
                     return "NO"
             
+            
+            else: #three counts don't match, fail and return "NO"
+                return "NO"
+
+
+                
+                """if(len(hello) == 0): #check for empty string
+                    return "YES"""
+            
+
+                """if(not checkCount(count2,hello)): #check if both failed, if true then return False
+                    return "NO" """
+            
             #if either is correct, third is the current count, assign value
+
+            """"
             currentChar = hello[0]
-            count = hello.count(currentChar) # if either is correct, third is the current count, assign value
+            count = hello.count(currentChar)
                 
             oneRemoved = True #used leniency (oneRemoved), set to True
 
             hello = hello.replace(currentChar,'')
+
+            """
                 
         
             
@@ -98,7 +136,7 @@ def isValid(hello):
         else:
             currentChar = hello[0]
 
-            if(checkCount(count,hello)): #check if matches count
+            if(checkCount(count,hello)): #check if counts match
                 hello = hello.replace(currentChar, '') #replace the character with an empty space
             
 
@@ -107,16 +145,16 @@ def isValid(hello):
                 #Use helper function to check if the count difference is valid
                 if(checkCountDifference(count,hello)): 
 
+
                     if(not oneRemoved): #check for oneRemoved
+
                         oneRemoved =True #No longer allow for other counts
+
                         hello = hello.replace(currentChar, '')
+
 
                     else: #the one time save is used, fail the string
                         return "NO"
-            #REMOVE    
-          #  if(len(hello) == 0): #check if string is empty, end loop
-             #   end = True
-       # checkCount
 
     return "YES"
 
@@ -146,23 +184,18 @@ def checkCountDifference(cnt,str):
 
             
 
-            
-
-
-        
-
-
-    
-    
-    pass
 
 def main():
     string = "aabbbccc"
-    print(isValid('aabbcd')) #Expect: NO, Actual: NO
-    print(isValid('aaabbcccddd')) #Expect: YES, Actual: YES
-    print(isValid(string)) #Expect: YES, Actual: YES
+    #print(isValid('aabbcd')) #Expect: NO, Actual: NO
+    print(isValid('aaabbcccddd')) #Expect: NO, Actual: NO
+    print(isValid(string)) #Expect: NO, Actual: NO
     print(isValid('aabbcd'),isValid('aabbcdddeefghi'),isValid('abcdefghhgfedecba'))
     #Expect: NO NO YES, Actual: NO NO YES
+    print(isValid('aabbbcccddd')) #Expect: NO, Actual: NO
+    print(isValid('aaaabbbcccdddeeefffggg')) #Expect: YES, Actual:
+
+    
 
     
 
