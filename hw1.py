@@ -181,11 +181,89 @@ def checkCountDifference(cnt,str):
         return False
                 
 
+""""
+isBalanced() algorithm:
 
+check count of brackets, fancy, and parenth.
+    if brackets % 2 == 0 *even* and fancy is even and parenth is even
+
+        Check string, add to some COLLECTION (list)
+        Keep adding till matching right side is found / string add runs out
+            remove last added element (pop) from collection #CHECK IF THERE IS ANYTHING IN COLLECTION FIRST
+            if expected matching side
+                continue
+            else 
+                fail
+        #string has ended, check if collection is also empty
+        if collection is empty #if collection is empty, everything has been matched as planned, end
+            success
+        else
+            fail
+        
+    
+
+    else #doesn't have even number of items, can't pass
+        fail
+
+"""
+
+#Check if a string has a valid ordering of opening and closing brackets
+#Checking simulates FILO as the brackets have to match in the reverse order they enter
+def isBalanced(brackets):
+
+    #initializing variables
+
+    brackMatch = {'}': '{', #dictionary for comparing brackets
+                  ']':'[',
+                  ')': '('} 
+
+    brackCollection = [] #list to store brackets in stack-like access
+
+    #check minimum conditions
+    #if the bracket counts are even, and if they are equal to their closing brackets continue
+    if((brackets.count('{') == brackets.count('}')) and
+       (brackets.count('[') == brackets.count(']')) and
+       (brackets.count('(') == brackets.count(')'))):
+        
+        for br in brackets: #loop through the string and gather the brackets
             
+            if(brackMatch.get(br)): #check if character is an ending bracket
+               
+                #check brackCollection if last added value is the complimentary bracket
+
+                if(len(brackCollection)): #check if brackCollection has any values
+                    
+                    if(brackMatch.get(br) == brackCollection.pop()): #check if values match
+                        continue #verified  last element from the collection and removed, continue with loop
+                    
+                    
+                    else: #brackets don't match, fail
+                        return "NO"
+                    
+                else: #there is nothing in the collection, fail
+                    return "NO"
+                
+            else: #add the element to the collection
+                brackCollection.append(br)
+
+        return "YES"
+
+    else: #bracket counts are not valid, fail
+        return "NO"
+
+
+
+
+
+
+
+
+
+
 
 
 def main():
+    """"
     string = "aabbbccc"
     #print(isValid('aabbcd')) #Expect: NO, Actual: NO
     print(isValid('aaabbcccddd')) #Expect: NO, Actual: NO
@@ -193,11 +271,18 @@ def main():
     print(isValid('aabbcd'),isValid('aabbcdddeefghi'),isValid('abcdefghhgfedecba'))
     #Expect: NO NO YES, Actual: NO NO YES
     print(isValid('aabbbcccddd')) #Expect: NO, Actual: NO
-    print(isValid('aaaabbbcccdddeeefffggg')) #Expect: YES, Actual:
+    print(isValid('aaaabbbcccdddeeefffggg')) #Expect: YES, Actual:YES
 
-    
+    """
+ 
+print(isBalanced('{[()]}'))
+print(isBalanced('{[(])}'))
+print(isBalanced('{{[[(())]]}}'))
+print(isBalanced('[{}]()'))
+print(isBalanced('[{}()]'))
+print(isBalanced('[{}]()'))
 
-    
+
 
 
 
