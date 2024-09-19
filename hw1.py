@@ -251,6 +251,83 @@ def isBalanced(brackets):
     else: #bracket counts are not valid, fail
         return "NO"
 
+class Node():
+
+    #Class constructor
+    def __init__(self, v, lC = None,rC = None): #variables with default values
+        self.value = v
+        self.leftChild = lC
+        self.rightChild = rC
+    
+
+    #traversals
+
+
+    #root, left, right
+    def preOrder(self, lst = []): #initialize lst as empty set for base case
+       
+       #set base case
+       if(self == None): 
+           return lst
+       
+       #loop through values, attach values to lst
+       else:
+            lst.append(self.value) #USES SELF INSTEAD OF A NODE, CHECK
+            self.preOrder(self.leftChild, lst)
+            self.preOrder(self.rightChild,lst)
+
+
+
+    #left, root, right
+    def inOrder(self, lst = []): #initialize lst as empty set for base case
+       
+       #set base case
+       if(self == None): 
+           return lst
+       
+       #loop through values, attach values to lst
+       else:
+            self.inOrder(self.leftChild, lst)
+            lst.append(self.value) #USES SELF INSTEAD OF A NODE, CHECK
+            self.inOrder(self.rightChild,lst)
+
+        
+        #left, root, right
+    def postOrder(self, lst = []): #initialize lst as empty set for base case
+       
+       #set base case
+       if(self == None): 
+           return lst
+       
+       #loop through values, attach values to lst
+       else:
+            Node.postOrder(self.leftChild, lst)
+            Node.postOrder(self.rightChild,lst)
+            lst.append(self.value) #USES SELF INSTEAD OF A NODE, CHECK
+            
+
+
+    
+
+    
+
+
+
+           
+
+
+
+
+
+hello = Node(2,Node(5),Node(6))
+
+print(hello.postOrder())
+
+
+        
+
+
+
 
 
 
@@ -275,12 +352,13 @@ def main():
 
     """
  
-print(isBalanced('{[()]}'))
-print(isBalanced('{[(])}'))
-print(isBalanced('{{[[(())]]}}'))
-print(isBalanced('[{}]()'))
-print(isBalanced('[{}()]'))
-print(isBalanced('[{}]()'))
+    print(isBalanced('{[()]}')) #Expect:YES, Actual: YES
+    print(isBalanced('{[(])}')) #Expect:NO, Actual: NO
+    print(isBalanced('{{[[(())]]}}')) #Expect:YES, Actual: YES
+    print(isBalanced('[{}]()')) #Expect:YES, Actual: YES
+    print(isBalanced('[{}()]')) #Expect:YES, Actual: YES
+    print(isBalanced('[{}]()')) #Expect:YES, Actual: YES
+
 
 
 
