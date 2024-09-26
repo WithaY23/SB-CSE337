@@ -264,47 +264,96 @@ class Node():
 
 
     #root, left, right
-    def preOrder(self, lst = []): #initialize lst as empty set for base case
+    def preOrder(self, lst = None): #initialize lst as empty set for base case
        
        #set base case
-       if(self == None): 
+       if (lst is None): 
+           lst = []
+
+       if(self is None): 
            return lst
        
+
        #loop through values, attach values to lst
        else:
-            lst.append(self.value) #USES SELF INSTEAD OF A NODE, CHECK
-            self.preOrder(self.leftChild, lst)
-            self.preOrder(self.rightChild,lst)
-
-
-
-    #left, root, right
-    def inOrder(self, lst = []): #initialize lst as empty set for base case
-       
-       #set base case
-       if(self == None): 
-           return lst
-       
-       #loop through values, attach values to lst
-       else:
-            self.inOrder(self.leftChild, lst)
-            lst.append(self.value) #USES SELF INSTEAD OF A NODE, CHECK
-            self.inOrder(self.rightChild,lst)
-
-        
-        #left, root, right
-    def postOrder(self, lst = []): #initialize lst as empty set for base case
-       
-       #set base case
-       if(self == None): 
-           return lst
-       
-       #loop through values, attach values to lst
-       else:
-            Node.postOrder(self.leftChild, lst)
-            Node.postOrder(self.rightChild,lst)
-            lst.append(self.value) #USES SELF INSTEAD OF A NODE, CHECK
+            lst.append(self.value) #attach value to lst
             
+            
+            if(self.leftChild): #if it exists, go down it
+                lst = self.leftChild.preOrder(lst) #reassign list explicitly to value
+            
+            if(self.rightChild): #after left check, if right exists, check down it
+                lst =self.rightChild.preOrder(lst)
+        
+       return lst #get to bottom, return collected values and continue till end of tree
+
+
+
+    #left, root, right; refer to preOrder for extensive comments
+    def inOrder(self, lst = None): #initialize lst as empty set for base case
+       
+       #set base case
+       if (lst is None): 
+           lst = []
+       if(self is None): 
+           return lst
+       
+
+       #loop through values, attach values to lst
+       else:
+            if(self.leftChild):
+                lst = self.leftChild.inOrder(lst)
+
+            lst.append(self.value)
+
+            if(self.rightChild):
+                lst = self.rightChild.inOrder(lst)
+       
+       return lst
+        
+        #left, right, root; refer to preOrder for extensive comments
+    def postOrder(self, lst = None): #initialize lst as empty set for base case
+       
+       #set base case
+       if (lst is None): 
+           lst = []
+
+       if(self is None): 
+           return lst
+       
+       #loop through values, attach values to lst
+       else:
+            if(self.leftChild):
+                lst = self.leftChild.postOrder(lst)
+
+            if(self.rightChild):
+                lst = self.rightChild.postOrder(lst)
+
+            lst.append(self.value)
+
+       return lst
+      
+
+    #simulate preOrder to sum the values
+    def sumTree(self, sum = 0): #initialize lst as empty set for base case
+    
+        #set base case
+        if(self is None): 
+            return 0
+        
+
+        #loop through values, add values to sum
+        else:
+            sum += self.value #add value to sum
+            
+            
+            if(self.leftChild): #if it exists, go down it
+                sum += self.leftChild.sumTree()
+            
+            if(self.rightChild):
+                sum+= self.rightChild.sumTree()
+        
+        return sum #collect sum of the path till tree has been traversed
 
 
     
@@ -319,9 +368,34 @@ class Node():
 
 
 
-hello = Node(2,Node(5),Node(6))
+firstNode = Node(2,Node(5),Node(6))
+secondNode = Node(3,firstNode,Node(9))
+thirdNode = Node(4,firstNode,secondNode)
 
-print(hello.postOrder())
+
+"""
+print(firstNode.preOrder())
+print(firstNode.inOrder())
+print(firstNode.postOrder())
+print(firstNode.preOrder())
+print(firstNode.inOrder())
+print(firstNode.postOrder())
+
+print(firstNode.preOrder())
+print(firstNode.inOrder())
+print(firstNode.postOrder())
+
+print(thirdNode.preOrder())
+print(thirdNode.inOrder())
+
+print(thirdNode.postOrder())
+
+print(secondNode.inOrder())
+print(firstNode.sumTree())
+print(secondNode.sumTree())
+print(thirdNode.sumTree())
+"""
+
 
 
         
@@ -351,14 +425,17 @@ def main():
     print(isValid('aaaabbbcccdddeeefffggg')) #Expect: YES, Actual:YES
 
     """
- 
+"""" 
     print(isBalanced('{[()]}')) #Expect:YES, Actual: YES
     print(isBalanced('{[(])}')) #Expect:NO, Actual: NO
     print(isBalanced('{{[[(())]]}}')) #Expect:YES, Actual: YES
     print(isBalanced('[{}]()')) #Expect:YES, Actual: YES
     print(isBalanced('[{}()]')) #Expect:YES, Actual: YES
     print(isBalanced('[{}]()')) #Expect:YES, Actual: YES
+"""
 
+myNode = Node(5,Node(10),Node(20))
+#myNode.preOrder()
 
 
 
