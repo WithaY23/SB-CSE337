@@ -374,6 +374,94 @@ thirdNode = Node(4,firstNode,secondNode)
 
 
 """
+ 1.  The total number of lines in the file. 
+ 2.  The total number of words in the file. 
+ 3.  The total number of characters (including whitespace) in the file. 
+ 4.  A new file named reversed_lines.txt contains all the lines from the original file in
+ reverse order
+"""
+#Read a file, gather and output number of lines, words, and characters. 
+#Creates an additional file, reversed_lines.txt, which contains the lines in reversed order
+#ADD TEST CASES
+def fileReader(txt):
+
+    #try except statement
+    try:
+        with open(txt,"r") as myTxt: #open file in read mode to read contents
+            lines = myTxt.readlines() #gather contents as a list
+
+
+    #Possible exceptions
+    except FileNotFoundError: 
+        print(f"The file, {txt}, was not found, shutting down program")
+
+    except OSError:
+        print("File found, error reading the file, shutting down program")
+
+
+
+    #no errors arise, compute as normal
+    else:
+
+        #initialize variables
+        characterCount = 0
+        wordCount = 0 #assume words, by definition, are separated by one space
+       
+
+
+        #gather number of lines
+        lengthOfText = len(lines)
+        print(f"Text: {lines}, \n length of text: {lengthOfText}")
+        
+
+
+        #WRITE THIS RECURSIVELY
+        #Get character and word count 
+        for l in lines: #l represents individual lines
+            
+            for ch in l: #individual character in each line
+                characterCount+= 1 #increase the character count for each word given
+
+            print(l.split(" "))
+            wordCount +=len(l.split(" ")) #separates words based on space and sums that to the count
+
+        print(f"Total number of lines: {lengthOfText} \nTotal number of words: {wordCount} \
+             \nTotal number of characters: {characterCount}")
+        
+
+        #write the contents from txt into a new file in reversed line order
+        with open("reversed_lines.txt", "w") as newTxt:
+            for reverse in lines[::-1]:
+                newTxt.write(reverse)
+
+
+
+
+
+        
+        #TROUBLESHOOT CODE, NOT THOROUGH OR INTENDED FOR SUBMISSION OVERVIEW
+
+
+        #newCharCount = 0
+        #newWordCount= 0
+        #with open("reversed_lines.txt","r") as newTxt:
+        #   newL= newTxt.readlines()
+        #     print(newL)
+        #     for l in newL:
+        #         for ch in l:
+        #             newCharCount += 1
+                
+        #         newWordCount +=len(l.split(" "))
+
+        # print(f"Old: {characterCount}, {wordCount} \n New: {newCharCount}, {newWordCount}")
+
+
+        
+        
+      
+
+
+"""
 print(firstNode.preOrder())
 print(firstNode.inOrder())
 print(firstNode.postOrder())
@@ -434,8 +522,10 @@ def main():
     print(isBalanced('[{}]()')) #Expect:YES, Actual: YES
 """
 
+fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/h.txt") #ADD TEST CASES
+
 myNode = Node(5,Node(10),Node(20))
-#myNode.preOrder()
+    #myNode.preOrder()
 
 
 
