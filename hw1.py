@@ -368,9 +368,7 @@ class Node():
 
 
 
-firstNode = Node(2,Node(5),Node(6))
-secondNode = Node(3,firstNode,Node(9))
-thirdNode = Node(4,firstNode,secondNode)
+
 
 
 """
@@ -461,23 +459,33 @@ def fileReader(txt):
       
 
 
+firstNode = Node(2,Node(5),Node(6))
+secondNode = Node(3,firstNode,Node(9))
+thirdNode = Node(4,firstNode,secondNode)
+fourthNode = Node(5)
+fifthNode = Node(1, None, Node(3))
+
+#print(firstNode.preOrder()) Expect: [2, 5, 6], Actual: [2, 5, 6]
+#print(firstNode.inOrder()) Expect: [5, 2, 6], Actual: [5, 2, 6]
+#print(firstNode.postOrder()) Expect: [5, 6, 2], Actual: [5, 6, 2]
+
+#print(thirdNode.preOrder())
+#Expected: [4, 2, 5, 6, 3, 2, 5, 6, 9], Actual: [4, 2, 5, 6, 3, 2, 5, 6, 9]
+
+#print(thirdNode.inOrder())
+#Expected: [5, 2, 6, 4, 5, 2, 6, 3, 9], Actual: [5, 2, 6, 4, 5, 2, 6, 3, 9]
+
+#print(thirdNode.postOrder())
+#Expected: [5, 6, 2, 5, 6, 2, 9, 3, 4], Actual: [5, 6, 2, 5, 6, 2, 9, 3, 4]
+
+#print(fifthNode.postOrder()) Expected: [3,1], Actual: [3,1]
+
+#print(firstNode.sumTree()) Expected: 13, Actual: 13
+#print(secondNode.sumTree()) Expected: 25, Actual: 25
+#print(thirdNode.sumTree()) Expected: 42, Actual: 42
+#print(fourthNode.sumTree()) Expected: 5, Actual: 5
+#print(fifthNode.sumTree()) Expected: 4, Actual: 4
 """
-print(firstNode.preOrder())
-print(firstNode.inOrder())
-print(firstNode.postOrder())
-print(firstNode.preOrder())
-print(firstNode.inOrder())
-print(firstNode.postOrder())
-
-print(firstNode.preOrder())
-print(firstNode.inOrder())
-print(firstNode.postOrder())
-
-print(thirdNode.preOrder())
-print(thirdNode.inOrder())
-
-print(thirdNode.postOrder())
-
 print(secondNode.inOrder())
 print(firstNode.sumTree())
 print(secondNode.sumTree())
@@ -502,27 +510,108 @@ print(thirdNode.sumTree())
 
 
 def main():
-    """"
-    string = "aabbbccc"
-    #print(isValid('aabbcd')) #Expect: NO, Actual: NO
-    print(isValid('aaabbcccddd')) #Expect: NO, Actual: NO
-    print(isValid(string)) #Expect: NO, Actual: NO
-    print(isValid('aabbcd'),isValid('aabbcdddeefghi'),isValid('abcdefghhgfedecba'))
-    #Expect: NO NO YES, Actual: NO NO YES
-    print(isValid('aabbbcccddd')) #Expect: NO, Actual: NO
-    print(isValid('aaaabbbcccdddeeefffggg')) #Expect: YES, Actual:YES
-
     """
-"""" 
-    print(isBalanced('{[()]}')) #Expect:YES, Actual: YES
-    print(isBalanced('{[(])}')) #Expect:NO, Actual: NO
-    print(isBalanced('{{[[(())]]}}')) #Expect:YES, Actual: YES
-    print(isBalanced('[{}]()')) #Expect:YES, Actual: YES
-    print(isBalanced('[{}()]')) #Expect:YES, Actual: YES
-    print(isBalanced('[{}]()')) #Expect:YES, Actual: YES
+    Problem 1:
+
+    #print(isValid('aabbcd')) Expect: NO, Actual: NO
+    #print(isValid('aaabbcccddd')) Expect: NO, Actual: NO
+    #print(isValid('aabbcd'),isValid('aabbcdddeefghi'),isValid('abcdefghhgfedecba'))
+    #Expect: NO NO YES, Actual: NO NO YES
+    #print(isValid('aabbbcccddd')) Expect: NO, Actual: NO
+    #print(isValid('aaaabbbcccdddeeefffggg')) Expect: YES, Actual:YES
+
+
+    Problem 2:
+
+    print(isBalanced('{[()]}')) Expect:YES, Actual: YES
+    print(isBalanced('{[(])}')) Expect:NO, Actual: NO
+    print(isBalanced('{{[[(())]]}}')) Expect:YES, Actual: YES
+    print(isBalanced('[{}]()')) Expect:YES, Actual: YES
+    print(isBalanced('[{}()]')) Expect:YES, Actual: YES
+    print(isBalanced('[{}]()')) Expect:YES, Actual: YES
+
+
+
+    Problem 3:
+    #print(firstNode.preOrder()) Expect: [2, 5, 6], Actual: [2, 5, 6]
+    #print(firstNode.inOrder()) Expect: [5, 2, 6], Actual: [5, 2, 6]
+    #print(firstNode.postOrder()) Expect: [5, 6, 2], Actual: [5, 6, 2]
+
+    #print(thirdNode.preOrder())
+    #Expected: [4, 2, 5, 6, 3, 2, 5, 6, 9], Actual: [4, 2, 5, 6, 3, 2, 5, 6, 9]
+
+    #print(thirdNode.inOrder())
+    #Expected: [5, 2, 6, 4, 5, 2, 6, 3, 9], Actual: [5, 2, 6, 4, 5, 2, 6, 3, 9]
+
+    #print(thirdNode.postOrder())
+    #Expected: [5, 6, 2, 5, 6, 2, 9, 3, 4], Actual: [5, 6, 2, 5, 6, 2, 9, 3, 4]
+
+    #print(fifthNode.postOrder()) Expected: [3,1], Actual: [3,1]
+
+    
+    #print(firstNode.sumTree()) Expected: 13, Actual: 13
+    #print(secondNode.sumTree()) Expected: 25, Actual: 25
+    #print(thirdNode.sumTree()) Expected: 42, Actual: 42
+    #print(fourthNode.sumTree()) Expected: 5, Actual: 5
+    #print(fifthNode.sumTree()) Expected: 4, Actual: 4
+
+
+    Problem 4:
+    See attached zip file
+    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test1.txt") 
+    #Expected:
+    # Total number of lines: 5 
+    # Total number of words: 5              
+    # Total number of characters: 10
+    #Actual:
+    # Total number of lines: 5 
+    # Total number of words: 5              
+    # Total number of characters: 10
+
+    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test2.txt") 
+    #Expected:
+    # Total number of lines: 13 
+    # Total number of words: 81              
+    # Total number of characters: 390
+    #Actual:
+    # Total number of lines: 13 
+    # Total number of words: 81              
+    # Total number of characters: 390
+
+    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test3.txt") 
+    #Expected: 
+    # Total number of lines: 4 
+    # Total number of words: 32              
+    # Total number of characters: 171
+    #Actual:
+    # Total number of lines: 4 
+    # Total number of words: 32              
+    # Total number of characters: 171
+
+    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test4.txt") 
+    #Expected:
+    # Total number of lines: 3 
+    # Total number of words: 4              
+    # Total number of characters: 21
+    #Actual:
+    # Total number of lines: 3 
+    # Total number of words: 4              
+    # Total number of characters: 21
+
+    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test5.txt")
+    #Expected:
+    # Total number of lines: 4 
+    # Total number of words: 6              
+    # Total number of characters: 30
+    #Actual:
+    # Total number of lines: 4 
+    # Total number of words: 6              
+    # Total number of characters: 30
+
+
+
 """
 
-fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/h.txt") #ADD TEST CASES
 
 myNode = Node(5,Node(10),Node(20))
     #myNode.preOrder()
