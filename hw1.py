@@ -1,27 +1,4 @@
 
-""""
-1st itteration:
-use find to find if a character exists elsewhere
-use count to find how many times a character occurs, store in count variable
-use replace to replace all the character occurences with empty spaces
-2nd++ itteration:
-use find to find if a character exists elsewhere
-use count to find how many times a character occurs, **check** to see if it matches count variable
-    if yes continue
-    if no
-        check how many over it is
-            if 1
-                check flag variable of one change
-                    if false
-                        turn true
-                    if true
-                        return false for function
-            else    
-                return false for function
-use replace to replace all the character occurences with empty spaces
-
-
-"""
 #check if a string has the same number of occurrences throughout with a leniency of 1 character
 def isValid(hello):
 
@@ -98,28 +75,6 @@ def isValid(hello):
             
             else: #three counts don't match, fail and return "NO"
                 return "NO"
-
-
-                
-                """if(len(hello) == 0): #check for empty string
-                    return "YES"""
-            
-
-                """if(not checkCount(count2,hello)): #check if both failed, if true then return False
-                    return "NO" """
-            
-            #if either is correct, third is the current count, assign value
-
-            """"
-            currentChar = hello[0]
-            count = hello.count(currentChar)
-                
-            oneRemoved = True #used leniency (oneRemoved), set to True
-
-            hello = hello.replace(currentChar,'')
-
-            """
-                
         
             
         else: #count difference is inadequate, return false
@@ -181,31 +136,9 @@ def checkCountDifference(cnt,str):
         return False
                 
 
-""""
-isBalanced() algorithm:
 
-check count of brackets, fancy, and parenth.
-    if brackets % 2 == 0 *even* and fancy is even and parenth is even
 
-        Check string, add to some COLLECTION (list)
-        Keep adding till matching right side is found / string add runs out
-            remove last added element (pop) from collection #CHECK IF THERE IS ANYTHING IN COLLECTION FIRST
-            if expected matching side
-                continue
-            else 
-                fail
-        #string has ended, check if collection is also empty
-        if collection is empty #if collection is empty, everything has been matched as planned, end
-            success
-        else
-            fail
-        
-    
 
-    else #doesn't have even number of items, can't pass
-        fail
-
-"""
 
 #Check if a string has a valid ordering of opening and closing brackets
 #Checking simulates FILO as the brackets have to match in the reverse order they enter
@@ -251,6 +184,8 @@ def isBalanced(brackets):
     else: #bracket counts are not valid, fail
         return "NO"
 
+
+#Node Class for tree traversal and sum
 class Node():
 
     #Class constructor
@@ -356,31 +291,11 @@ class Node():
         return sum #collect sum of the path till tree has been traversed
 
 
-    
-
-    
 
 
 
-           
-
-
-
-
-
-
-
-
-"""
- 1.  The total number of lines in the file. 
- 2.  The total number of words in the file. 
- 3.  The total number of characters (including whitespace) in the file. 
- 4.  A new file named reversed_lines.txt contains all the lines from the original file in
- reverse order
-"""
 #Read a file, gather and output number of lines, words, and characters. 
 #Creates an additional file, reversed_lines.txt, which contains the lines in reversed order
-#ADD TEST CASES
 def fileReader(txt):
 
     #try except statement
@@ -409,22 +324,19 @@ def fileReader(txt):
 
         #gather number of lines
         lengthOfText = len(lines)
-        print(f"Text: {lines}, \n length of text: {lengthOfText}")
         
 
 
-        #WRITE THIS RECURSIVELY
         #Get character and word count 
         for l in lines: #l represents individual lines
             
             for ch in l: #individual character in each line
                 characterCount+= 1 #increase the character count for each word given
 
-            print(l.split(" "))
             wordCount +=len(l.split(" ")) #separates words based on space and sums that to the count
 
         print(f"Total number of lines: {lengthOfText} \nTotal number of words: {wordCount} \
-             \nTotal number of characters: {characterCount}")
+             \nTotal number of characters: {characterCount} \n")
         
 
         #write the contents from txt into a new file in reversed line order
@@ -459,38 +371,7 @@ def fileReader(txt):
       
 
 
-firstNode = Node(2,Node(5),Node(6))
-secondNode = Node(3,firstNode,Node(9))
-thirdNode = Node(4,firstNode,secondNode)
-fourthNode = Node(5)
-fifthNode = Node(1, None, Node(3))
 
-#print(firstNode.preOrder()) Expect: [2, 5, 6], Actual: [2, 5, 6]
-#print(firstNode.inOrder()) Expect: [5, 2, 6], Actual: [5, 2, 6]
-#print(firstNode.postOrder()) Expect: [5, 6, 2], Actual: [5, 6, 2]
-
-#print(thirdNode.preOrder())
-#Expected: [4, 2, 5, 6, 3, 2, 5, 6, 9], Actual: [4, 2, 5, 6, 3, 2, 5, 6, 9]
-
-#print(thirdNode.inOrder())
-#Expected: [5, 2, 6, 4, 5, 2, 6, 3, 9], Actual: [5, 2, 6, 4, 5, 2, 6, 3, 9]
-
-#print(thirdNode.postOrder())
-#Expected: [5, 6, 2, 5, 6, 2, 9, 3, 4], Actual: [5, 6, 2, 5, 6, 2, 9, 3, 4]
-
-#print(fifthNode.postOrder()) Expected: [3,1], Actual: [3,1]
-
-#print(firstNode.sumTree()) Expected: 13, Actual: 13
-#print(secondNode.sumTree()) Expected: 25, Actual: 25
-#print(thirdNode.sumTree()) Expected: 42, Actual: 42
-#print(fourthNode.sumTree()) Expected: 5, Actual: 5
-#print(fifthNode.sumTree()) Expected: 4, Actual: 4
-"""
-print(secondNode.inOrder())
-print(firstNode.sumTree())
-print(secondNode.sumTree())
-print(thirdNode.sumTree())
-"""
 
 
 
@@ -510,55 +391,68 @@ print(thirdNode.sumTree())
 
 
 def main():
-    """
-    Problem 1:
 
-    #print(isValid('aabbcd')) Expect: NO, Actual: NO
-    #print(isValid('aaabbcccddd')) Expect: NO, Actual: NO
-    #print(isValid('aabbcd'),isValid('aabbcdddeefghi'),isValid('abcdefghhgfedecba'))
+    #Problem 1:
+
+    print(isValid('aabbcd')) #Expect: NO, Actual: NO
+    print(isValid('aaabbcccddd')) #Expect: NO, Actual: NO
+    print(isValid('aabbcd'),isValid('aabbcdddeefghi'),isValid('abcdefghhgfedecba'))
     #Expect: NO NO YES, Actual: NO NO YES
-    #print(isValid('aabbbcccddd')) Expect: NO, Actual: NO
-    #print(isValid('aaaabbbcccdddeeefffggg')) Expect: YES, Actual:YES
+    print(isValid('aabbbcccddd')) #Expect: NO, Actual: NO
+    print(isValid('aaaabbbcccdddeeefffggg')) #Expect: YES, Actual:YES
 
 
-    Problem 2:
+    #Problem 2:
 
-    print(isBalanced('{[()]}')) Expect:YES, Actual: YES
-    print(isBalanced('{[(])}')) Expect:NO, Actual: NO
-    print(isBalanced('{{[[(())]]}}')) Expect:YES, Actual: YES
-    print(isBalanced('[{}]()')) Expect:YES, Actual: YES
-    print(isBalanced('[{}()]')) Expect:YES, Actual: YES
-    print(isBalanced('[{}]()')) Expect:YES, Actual: YES
+    print(isBalanced('{[()]}')) #Expect:YES, Actual: YES
+    print(isBalanced('{[(])}')) #Expect:NO, Actual: NO
+    print(isBalanced('{{[[(())]]}}')) #Expect:YES, Actual: YES
+    print(isBalanced('[{}]()')) #Expect:YES, Actual: YES
+    print(isBalanced('[{}()]')) #Expect:YES, Actual: YES
+    print(isBalanced('[{}]()')) #Expect:YES, Actual: YES
 
 
 
-    Problem 3:
-    #print(firstNode.preOrder()) Expect: [2, 5, 6], Actual: [2, 5, 6]
-    #print(firstNode.inOrder()) Expect: [5, 2, 6], Actual: [5, 2, 6]
-    #print(firstNode.postOrder()) Expect: [5, 6, 2], Actual: [5, 6, 2]
+    #Problem 3:
 
-    #print(thirdNode.preOrder())
+    #initialize variables
+
+    firstNode = Node(2,Node(5),Node(6))
+    secondNode = Node(3,firstNode,Node(9))
+    thirdNode = Node(4,firstNode,secondNode)
+    fourthNode = Node(5)
+    fifthNode = Node(1, None, Node(3))
+
+
+    print(firstNode.preOrder()) #Expect: [2, 5, 6], Actual: [2, 5, 6]
+    print(firstNode.inOrder()) #Expect: [5, 2, 6], Actual: [5, 2, 6]
+    print(firstNode.postOrder()) #Expect: [5, 6, 2], Actual: [5, 6, 2]
+
+    print(thirdNode.preOrder())
     #Expected: [4, 2, 5, 6, 3, 2, 5, 6, 9], Actual: [4, 2, 5, 6, 3, 2, 5, 6, 9]
 
-    #print(thirdNode.inOrder())
+    print(thirdNode.inOrder())
     #Expected: [5, 2, 6, 4, 5, 2, 6, 3, 9], Actual: [5, 2, 6, 4, 5, 2, 6, 3, 9]
 
-    #print(thirdNode.postOrder())
+    print(thirdNode.postOrder())
     #Expected: [5, 6, 2, 5, 6, 2, 9, 3, 4], Actual: [5, 6, 2, 5, 6, 2, 9, 3, 4]
 
-    #print(fifthNode.postOrder()) Expected: [3,1], Actual: [3,1]
+    print(fifthNode.postOrder()) #Expected: [3,1], Actual: [3,1]
 
     
-    #print(firstNode.sumTree()) Expected: 13, Actual: 13
-    #print(secondNode.sumTree()) Expected: 25, Actual: 25
-    #print(thirdNode.sumTree()) Expected: 42, Actual: 42
-    #print(fourthNode.sumTree()) Expected: 5, Actual: 5
-    #print(fifthNode.sumTree()) Expected: 4, Actual: 4
+    print(firstNode.sumTree()) #Expected: 13, Actual: 13
+    
+    print(secondNode.sumTree()) #Expected: 25, Actual: 25
+    print(thirdNode.sumTree()) #Expected: 42, Actual: 42
+    print(fourthNode.sumTree()) #Expected: 5, Actual: 5
+    print(fifthNode.sumTree()) #Expected: 4, Actual: 4
 
 
-    Problem 4:
-    See attached zip file
-    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test1.txt") 
+    #Problem 4:
+    #See attached zip file
+
+
+    fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test1.txt") 
     #Expected:
     # Total number of lines: 5 
     # Total number of words: 5              
@@ -568,7 +462,7 @@ def main():
     # Total number of words: 5              
     # Total number of characters: 10
 
-    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test2.txt") 
+    fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test2.txt") 
     #Expected:
     # Total number of lines: 13 
     # Total number of words: 81              
@@ -578,7 +472,7 @@ def main():
     # Total number of words: 81              
     # Total number of characters: 390
 
-    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test3.txt") 
+    fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test3.txt") 
     #Expected: 
     # Total number of lines: 4 
     # Total number of words: 32              
@@ -588,7 +482,7 @@ def main():
     # Total number of words: 32              
     # Total number of characters: 171
 
-    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test4.txt") 
+    fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test4.txt") 
     #Expected:
     # Total number of lines: 3 
     # Total number of words: 4              
@@ -598,7 +492,7 @@ def main():
     # Total number of words: 4              
     # Total number of characters: 21
 
-    #fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test5.txt")
+    fileReader("/Users/aydenbudhoo/Desktop/School/College/SB/Code-CSE337/Assignments/Test_Folder/Test5.txt")
     #Expected:
     # Total number of lines: 4 
     # Total number of words: 6              
@@ -607,16 +501,6 @@ def main():
     # Total number of lines: 4 
     # Total number of words: 6              
     # Total number of characters: 30
-
-
-
-"""
-
-
-myNode = Node(5,Node(10),Node(20))
-    #myNode.preOrder()
-
-
 
 
 
