@@ -207,6 +207,7 @@ class Parser
 
     rescue => e #catching errors, expecting raised error
       puts e.message
+      exit 1
     end
 
   end 
@@ -225,10 +226,12 @@ class Parser
 
     rescue Errno::ENOENT => e #expecting fileopen error
       puts e.message
+      exit 1
 
     rescue =>e #capture other possible errors
       puts ("Captured an unexpected error")
       puts e.message
+      exit 1
 
 
     ensure 
@@ -305,7 +308,12 @@ class Parser
               when "-m" #output the matched part of each line of the file
                 @fileStored.each do |line| 
                   if (line.include?(@pattern)) #verify pattern is a word and is there
-                      puts line.scan(@pattern) #output pattern
+                    words = line.split(" ") #its a word, separate by spaces
+                    words.each do |w| #take each word in the array, output it if it has the letter
+                      if(w.include?(@pattern))
+                        puts w
+                      end
+                    end
                   end
                 end
             end
@@ -326,7 +334,9 @@ class Parser
 
               when "-m"
                 @fileStored.each do |line|
-                  puts line.scan(@pattern) #output pattern
+                  if(line.match(@pattern))
+                    puts line.match(@pattern) #output pattern
+                  end
                 end
             end
 
@@ -347,6 +357,7 @@ class Parser
 
     rescue TypeError
       puts "Expected a word, received regex"
+      exit 1
     ensure
       @fileStored.close
     end
@@ -366,7 +377,7 @@ class Parser
           case ARGV[@argIndex] #validate and gather supplied command, exception raised if invalid
 
             when "-w", "-p", "-v" #check provided option
-              puts "In relevant -w case"
+              puts "In relevant -w p v case"
               @option1 = ARGV[@argIndex] # assign to option1
 
             when "-c" #-c and -m need to be paired with other options, validate
@@ -462,6 +473,7 @@ class Parser
 
     rescue =>e #expecting invalid option or combination of options error
       puts e.message
+      exit 1
     end
   end
 
@@ -491,6 +503,7 @@ class Parser
       end
     rescue => e #expecting missing required arguments
       e.message
+      exit 1
     
     end
 
@@ -544,6 +557,18 @@ mine.parsing
 
 #ruby rgrep.rb "h.txt" -w -m l DC piazza (-m case)
 #Expected:
+#hello
+#isabella
+#tortilla
+#l
+#Actual:
+#hello
+#isabella
+#tortilla
+#l
+
+#ruby rgrep.rb "h.txt" -p -m l
+#Expected:
 #l
 #l
 #l
@@ -560,7 +585,74 @@ mine.parsing
 #l
 #l
 
-#
+#ruby rgrep.rb "h.txt" -p "^.+\d"
+#Expected:
+#franky21 
+#h23p
+#paren509thesis
+#Actual:
+#franky21 
+#h23p
+#paren509thesis
 
+#ruby rgrep.rb "h.txt" -p "^.*\d\w{2,}" 
+#Expected:
+#h23p
+#paren509thesis
+#Actual:
+#h23p
+#paren509thesis
 
+#ruby rgrep.rb "h.txt" -p "^.*(l{2}|b{2}).*$"
+#Expected:
+#bubbubbus
+#hello
+#isabella
+#tortilla
+#Actual:
+#bubbubbus
+#hello
+#isabella
+#tortilla
 
+#ruby rgrep.rb "h.txt" -p -c "^.*(l{2}|b{2}).*$"
+#Expected:
+#4
+#Actual:
+#4
+
+#ruby rgrep.rb "h.txt" -p -m "(l{2}|b{2})"
+#Expect:
+#bb
+#ll
+#ll
+#ll
+#Actual:
+#bb
+#ll
+#ll
+#ll
+
+#ruby rgrep.rb "h.txt" -v "(l{2}|b{2})"
+#Expected:
+#team
+
+#france           l 
+#2!tryme
+#franky21
+#h23p
+#paren509thesis
+#Actual:
+#team
+
+#france           l 
+#2!tryme
+#franky21
+#h23p
+#paren509thesis
+
+#ruby rgrep.rb "h.txt" -v -c "(\d)"
+#Expected:
+#8
+#Actual:
+#8
