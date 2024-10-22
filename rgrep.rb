@@ -1,43 +1,43 @@
-class Parent
-  def initialize(n)
-    @name= n
-  end
+# class Parent
+#   def initialize(n)
+#     @name= n
+#   end
   
-  def greet
-    "Hello my name is #{@name}"
-  end
-end
-
-# class Child < Parent
 #   def greet
-#     result = super
-#     result + ", and Hello from Child!"
+#     "Hello my name is #{@name}"
 #   end
 # end
 
-# child = Child.new
+# # class Child < Parent
+# #   def greet
+# #     result = super
+# #     result + ", and Hello from Child!"
+# #   end
+# # end
 
-# puts child.greet
+# # child = Child.new
 
-class Child < Parent
-  def initialize()
-    super(ARGV[0])
-    @age = ARGV[1]
+# # puts child.greet
 
-  end
+# class Child < Parent
+#   def initialize()
+#     super(ARGV[0])
+#     @age = ARGV[1]
 
-  def display()
-    puts ("Hi my name is #{@name}")
-    puts ("I am #{@age} years old!")
+#   end
 
-  end
-end
+#   def display()
+#     puts ("Hi my name is #{@name}")
+#     puts ("I am #{@age} years old!")
+
+#   end
+# end
 
 
-myC = Child.new
-myC.display
+# myC = Child.new
+# myC.display
 
-puts ARGV.size
+# puts ARGV.size
 
 
 
@@ -252,9 +252,15 @@ class Parser
 
 
           when "-w" #pattern is a word, search for and print relevant lines
+            # puts "Pattern: #{@pattern}"
+            #   puts "Index: #{@argIndex}"
+            #   puts "Option1: #{@option1}"
+            #   puts "Option2: #{@option2}"
+            #   puts "Size: #{@size}"
             @fileStored.each do |line| 
-              puts line
-              puts @pattern
+              
+
+
               if (line.include?(@pattern)) #check if the line contains the pattern
                 puts line 
               end
@@ -344,10 +350,15 @@ class Parser
     ensure
       @fileStored.close
     end
-end
+  end
 
 
   def optionGather #parse and store options of parser
+    # puts "Pattern: #{@pattern}"
+    # puts "Index: #{@argIndex}"
+    # puts "Option1: #{@option1}"
+    # puts "Option2: #{@option2}"
+    # puts "Size: #{@size}"
     begin
       while((@argIndex < @size-1) || !(@option1.empty? || @option2.empty?)) #check up until the last element, that will be the pattern
         if(@option1.empty?)#check if any value has been added to the first option
@@ -355,6 +366,7 @@ end
           case ARGV[@argIndex] #validate and gather supplied command, exception raised if invalid
 
             when "-w", "-p", "-v" #check provided option
+              puts "In relevant -w case"
               @option1 = ARGV[@argIndex] # assign to option1
 
             when "-c" #-c and -m need to be paired with other options, validate
@@ -440,24 +452,32 @@ end
             else
               raise "Invalid option"
           end
-
+          @argIndex += 1 # increment index after processing the option
         else #Both options are filled, no longer need to process options
           break
         end
 
-        @argIndex += 1 # increment index after processing the option
+        
       end
 
     rescue =>e #expecting invalid option or combination of options error
       puts e.message
     end
-end
+  end
 
 
   def patternGather #gather pattern
 
+              # puts "Pattern: #{@pattern}"
+              # puts "Index: #{@argIndex}"
+              # puts "Option1: #{@option1}"
+              # puts "Option2: #{@option2}"
+              # puts "Size: #{@size}"
     begin
       if(@argIndex < @size) # check that there is a pattern NEEDED, no option, ruby rgrep.rb text.txt [no option] [no pattern]
+
+
+            
 
           @argIndex = @size - 1 #set index to last element of ARGV
 
@@ -493,14 +513,54 @@ end
 # tester
 
 
-def testing
-  ARGV.each do |x|
-    puts x.class
-  end
-end
+# def testing
+#   ARGV.each do |x|
+#     puts x.class
+#   end
+# end
 
 
 mine = Parser.new
 mine.parsing
 
-testing
+
+#ruby rgrep.rb "h.txt" -w l
+#Expected:
+  #hello
+  #isabella
+  #tortilla
+  #france           l 
+#Actual:
+  #hello
+  #isabella
+  #tortilla
+  #france           l 
+
+#ruby rgrep.rb "h.txt" -w -c l
+#Expected:
+  #4
+#Actual:
+  #4
+
+#ruby rgrep.rb "h.txt" -w -m l DC piazza (-m case)
+#Expected:
+#l
+#l
+#l
+#l
+#l
+#l
+#l
+#Actual:
+#l
+#l
+#l
+#l
+#l
+#l
+#l
+
+#
+
+
+
