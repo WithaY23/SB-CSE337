@@ -172,10 +172,6 @@
 
 
 class Parser
-  #FIND END ERROR, likely in option gather
-
-
-
 
   def initialize()
     @argIndex = 0
@@ -190,7 +186,7 @@ class Parser
     begin
       
       if @size < 2
-        raise "Missing Requirements"
+        raise "Missing Required Arguments"
       end
 
       @fileN = ARGV[0] #can assign file to fileN now that its a valid size
@@ -255,11 +251,7 @@ class Parser
 
 
           when "-w" #pattern is a word, search for and print relevant lines
-            # puts "Pattern: #{@pattern}"
-            #   puts "Index: #{@argIndex}"
-            #   puts "Option1: #{@option1}"
-            #   puts "Option2: #{@option2}"
-            #   puts "Size: #{@size}"
+
             @fileStored.each do |line| 
               
 
@@ -333,9 +325,14 @@ class Parser
                 puts count #display count
 
               when "-m"
+                altLine= ""
                 @fileStored.each do |line|
                   if(line.match(@pattern))
-                    puts line.match(@pattern) #output pattern
+                    altLine = line
+                    while(altLine.match(@pattern))
+                      puts altLine.match(@pattern)
+                      altLine = altLine.sub(@pattern, "")
+                    end
                   end
                 end
             end
@@ -365,19 +362,20 @@ class Parser
 
 
   def optionGather #parse and store options of parser
-    # puts "Pattern: #{@pattern}"
-    # puts "Index: #{@argIndex}"
-    # puts "Option1: #{@option1}"
-    # puts "Option2: #{@option2}"
-    # puts "Size: #{@size}"
+    
     begin
+      if(@size == 2) #assume default option, check if last is an option
+        if(ARGV[@size-1] =~ /^-.$/)
+          raise "Missing Required Arguments"
+        end
+      end
       while((@argIndex < @size-1) || !(@option1.empty? || @option2.empty?)) #check up until the last element, that will be the pattern
         if(@option1.empty?)#check if any value has been added to the first option
 
           case ARGV[@argIndex] #validate and gather supplied command, exception raised if invalid
 
             when "-w", "-p", "-v" #check provided option
-              puts "In relevant -w p v case"
+              
               @option1 = ARGV[@argIndex] # assign to option1
 
             when "-c" #-c and -m need to be paired with other options, validate
@@ -395,9 +393,12 @@ class Parser
                 
                 when "-m", "-c" #valid options, invalid combination
                   raise "Invalid combination of options"
-
-                else #invalid option
+                
+                when /^-[^0-9wpvcm]$/ #check for other invalid flags
                   raise "Invalid option"
+
+                else #invalid option, only pattern left
+                  raise "Invalid combination of options"
                   
                 end
 
@@ -420,27 +421,30 @@ class Parser
                 when "-v", "-c","-m" #valid options, invalid combination
                   raise "Invalid combination of options"
                 
-                else #invalid pairing
-                  raise "Invalid option"
+                when /^-[^0-9wpvcm]$/ #check for other invalid flags
+                  raise "Invalid option" 
+                
+                else #invalid pairing, only pattern left
+                  raise "Invalid combination of options"
                   
                 end
 
               else
                 raise "Invalid combination of options"
               end
-            
-            else
-              raise "Invalid option" 
+            when /^-[^0-9wpvcm]$/ #check for other invalid flags
+              raise "Invalid option"
+
           end
 
           @argIndex +=1 #increment the index
 
         elsif(@option2.empty?) #check if the second has been added
-
           #Base allowed options off of first option
           case ARGV[@argIndex] # gather allowed options based on the first option
 
             when "-c" #pairs with all possibilities of option1, assign automatically
+
               @option2 = ARGV[@argIndex] # assign to option2
 
             when "-m" #only paired with -w and -p
@@ -457,9 +461,12 @@ class Parser
                   raise "Invalid option"
               end
 
-            when "-w", "-p", "-v"#valid options, invalid combination, only -v,-m, and -p left
+            when "-w", "-p", "-v"#valid options, invalid combination, only -v,-w, and -p left
               raise "Invalid combination of options"
             
+            when /^-[^0-9wpvcm]$/
+              raise "Invalid option"
+              
             else
               raise "Invalid option"
           end
@@ -471,7 +478,7 @@ class Parser
         
       end
 
-    rescue =>e #expecting invalid option or combination of options error
+    rescue => e #expecting invalid option or combination of options error
       puts e.message
       exit 1
     end
@@ -480,16 +487,13 @@ class Parser
 
   def patternGather #gather pattern
 
-              # puts "Pattern: #{@pattern}"
-              # puts "Index: #{@argIndex}"
-              # puts "Option1: #{@option1}"
-              # puts "Option2: #{@option2}"
-              # puts "Size: #{@size}"
+              
     begin
       if(@argIndex < @size) # check that there is a pattern NEEDED, no option, ruby rgrep.rb text.txt [no option] [no pattern]
-
-
-            
+        
+        if(@option1.empty?) #check default case, assign if needed
+          @option1 = "-p"
+        end
 
           @argIndex = @size - 1 #set index to last element of ARGV
 
@@ -621,8 +625,8 @@ mine.parsing
 #Actual:
 #4
 
-#ruby rgrep.rb "h.txt" -p -m "(l{2}|b{2})"
-#Expect:
+#ruby rgrep.rb "h.txt" -m -p "(l{2}|b{2})"
+#Expected:
 #bb
 #ll
 #ll
@@ -651,8 +655,67 @@ mine.parsing
 #h23p
 #paren509thesis
 
-#ruby rgrep.rb "h.txt" -v -c "(\d)"
+#ruby rgrep.rb "h.txt" -c -v "(\d)"
 #Expected:
 #8
 #Actual:
 #8
+
+#ruby rgrep.rb "h.txt" -v -m "(\d)"
+#Expected:
+#Invalid combination of options
+#Actual:
+#Invalid combination of options
+
+
+#ruby rgrep.rb "h.txt" -m -v "(\d)"
+#Expected:
+#Invalid combination of options
+#Actual:
+#Invalid combination of options
+
+#ruby rgrep.rb "h.txt" -m "(\d)"
+#Expected:
+#Invalid combination of options
+#Actual:
+#Invalid combination of options
+
+
+#ruby rgrep.rb "h.txt" -m -v -v -v -v "(l{2}|b{2})"
+#Expected:
+#Invalid combination of options
+#Actual:
+#Invalid combination of options
+
+
+
+#ruby rgrep.rb "h.txt" -m -w "(l{2}|b{2})" 
+#Expected:
+#
+#Actual:
+#
+
+#ruby rgrep.rb "h.txt" -m -p -p -p -p "(l{2}|b{2})" 
+#Expected:
+#bb
+#ll
+#ll
+#ll
+#Actual:
+#bb
+#ll
+#ll
+#ll
+
+
+#ruby rgrep.rb "h.txt" "(l{2}|b{2})" 
+#Expected:
+#bubbubbus
+#hello
+#isabella
+#tortilla
+#Actual:
+#bubbubbus
+#hello
+#isabella
+#tortilla
