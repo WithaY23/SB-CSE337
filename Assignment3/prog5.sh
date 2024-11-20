@@ -7,7 +7,18 @@
 #Program- take 2 files, ex: text.txt and dict.txt, and output invalid words (not found in dict.txt) from text.txt to console
 #use awk to print out the line
 #pipeline into bash to process each word
-while read -r line || [[ -n "$line" ]]; do #account for no backspace
+
+#Test case 1:
+# ./prog5.sh words.txt wordsD.txt 
+# hate
+# love
+# Tests 4 letter words with standard input/output, no punctuation
+
+
+# sed 's/[^a-zA-Z]//g' "$1" | while read -r line || [[ -n "$line" ]]; do
+# ...
+# done
+while read -r line || [[ -n "$line" ]]; do #account for no newlinespace
 
  for word in $line; do 
 

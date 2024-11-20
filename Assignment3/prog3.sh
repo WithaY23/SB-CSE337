@@ -97,7 +97,16 @@
 
 
 #!/bin/bash
-
+#Test case 1:
+# ./prog3.sh data.txt 1 2 3 4 5 50 50 105 1000050
+#Test case 2:
+# ./prog3.sh 1 2 3 4 5
+#Test case 3:
+# ./prog3.sh data.txt 1 2 3 4 5
+#Test case 4:
+# ./prog3.sh data.txt 1 2 3 4 59
+#Test case 5:
+# ./prog3.sh data.txt
 
 #Calculate classgrade from a txt file and a series of weights provided by the CML
 #Output classgrade rounded down
