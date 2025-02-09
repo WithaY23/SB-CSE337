@@ -4,7 +4,7 @@ Modify array accessor method,[], to return '\0' instead of nil as an out of boun
 
 Modify map method to return an instance of an array provided an optional range and block method
 
- 
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 rgrep.rb:
 A ruby grep that takes a text file, one mandatory option (-w, -p, -v), an optional option (-c, -m),
 and a pattern to search in  the text file
@@ -27,3 +27,20 @@ Optional:
 *Thoroughly commented
 *Tested thoroughly
 *-Files tested not included, used to display the testing done that may be verified by users
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+contains_virus.rb:
+Solve for the lowest amount of walls needed to contain a virus in a simulated virus outbreak.
+Cells containing the virus are indicated with a '1' in a 2D array.
+
+*Commented thoroughly with purpose
+*Tested thoroughly
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+vehicle.rb:
+Simulate characteristics of vehicles including cars and trucks. Demonstrate subclass
+and module.
+
+*Commented throughly with purpose
+*Tested thoroughly
